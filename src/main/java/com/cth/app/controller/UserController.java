@@ -31,6 +31,15 @@ public class UserController {
         return "users";
     }
 
+    @GetMapping("/new")
+    @Operation(summary = "Get user creation form page")
+    public String createUserForm(Model model) {
+        model.addAttribute("appName", appConfigService.getAppName());
+        model.addAttribute("mfaEnabled", appConfigService.isMfaEnabled());
+        model.addAttribute("user", new User());
+        return "user-create";
+    }
+
     @PostMapping("/create")
     public String createUser(@ModelAttribute User user, RedirectAttributes redirectAttributes) {
         try {

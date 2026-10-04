@@ -20,6 +20,7 @@
             <h4 class="text-white mb-4 ps-2" th:text="${appName}">Application</h4>
             <a href="/dashboard"><i class="bi bi-speedometer2 me-2"></i> Realtime Dashboard</a>
             <a href="/users" class="active"><i class="bi bi-people me-2"></i> User Maintenance</a>
+            <a href="/users/new"><i class="bi bi-person-plus me-2"></i> Create User</a>
             <a href="/db-explorer"><i class="bi bi-database me-2"></i> Database Explorer</a>
             <a href="/reports"><i class="bi bi-file-earmark-bar-graph me-2"></i> Online Reports</a>
             <a href="/swagger-ui.html" target="_blank"><i class="bi bi-code-square me-2"></i> Swagger API Docs</a>
@@ -35,7 +36,10 @@
         <div class="col-md-10 p-4">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h2>User Maintenance & Account Management</h2>
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addUserModal"><i class="bi bi-person-plus me-1"></i> Create New User</button>
+                <div>
+                    <a href="/users/new" class="btn btn-success me-2"><i class="bi bi-person-plus-fill me-1"></i> Create User Page</a>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addUserModal"><i class="bi bi-person-plus me-1"></i> Quick Add Modal</button>
+                </div>
             </div>
 
             <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
