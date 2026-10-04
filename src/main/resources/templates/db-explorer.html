@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${appName} + ' - Database Explorer'"></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body { background-color: #f8fafc; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .sidebar { min-height: 100vh; background-color: #0f172a; color: white; }
+        .sidebar a { color: #94a3b8; text-decoration: none; padding: 12px 20px; display: block; border-radius: 6px; margin-bottom: 4px; }
+        .sidebar a:hover, .sidebar a.active { background-color: #1e293b; color: #38bdf8; }
+    </style>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar Navigation -->
+        <div class="col-md-2 sidebar p-3">
+            <h4 class="text-white mb-4 ps-2" th:text="${appName}">Application</h4>
+            <a href="/dashboard"><i class="bi bi-speedometer2 me-2"></i> Realtime Dashboard</a>
+            <a href="/users"><i class="bi bi-people me-2"></i> User Maintenance</a>
+            <a href="/db-explorer" class="active"><i class="bi bi-database me-2"></i> Database Explorer</a>
+            <a href="/reports"><i class="bi bi-file-earmark-bar-graph me-2"></i> Online Reports</a>
+            <a href="/swagger-ui.html" target="_blank"><i class="bi bi-code-square me-2"></i> Swagger API Docs</a>
+            <a href="/settings"><i class="bi bi-gear me-2"></i> System Settings</a>
+            <div class="mt-5 ps-2">
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="btn btn-outline-danger btn-sm w-100"><i class="bi bi-box-arrow-right me-1"></i> Sign Out</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="col-md-10 p-4">
+            <h2>Database Explorer & Field Inspector</h2>
+            <p class="text-muted">Select a database table to inspect fields, data types, and preview records.</p>
+
+            <div class="row mb-4">
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm p-3">
+                        <h5 class="card-title mb-3"><i class="bi bi-list-columns me-2"></i> Database Tables</h5>
+                        <div class="list-group list-group-flush" style="max-height: 400px; overflow-y: auto;">
+                            <a th:each="t : ${tables}" th:href="@{'/db-explorer?selectedTable=' + ${t}}"
+                               class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                               th:classappend="${t == selectedTable ? 'active fw-bold' : ''}">
+                               <span th:text="${t}">TABLE_NAME</span>
+                               <i class="bi bi-chevron-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-8">
+                    <div th:if="${metadata}" class="card border-0 shadow-sm p-3 mb-4">
+                        <h5 class="card-title text-primary"><i class="bi bi-table me-2"></i> Table Fields: <span class="fw-bold" th:text="${metadata.tableName}"></span></h5>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped mt-3">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Column Name</th>
+                                        <th>Data Type</th>
+                                        <th>Size</th>
+                                        <th>Nullable</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="col : ${metadata.columns}">
+                                        <td class="fw-semibold" th:text="${col.columnName}"></td>
+                                        <td th:text="${col.dataType}"></td>
+                                        <td th:text="${col.columnSize}"></td>
+                                        <td th:text="${col.nullable ? 'YES' : 'NO'}"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div th:if="${previewData}" class="card border-0 shadow-sm p-3">
+                        <h5 class="card-title text-success"><i class="bi bi-eye me-2"></i> Data Preview (First 10 Rows)</h5>
+                        <div class="table-responsive" style="max-height: 300px; overflow-y: auto;">
+                            <table class="table table-sm table-hover border">
+                                <thead>
+                                    <tr class="table-secondary">
+                                        <th th:each="key : ${previewData[0].keySet()}" th:text="${key}">Key</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="row : ${previewData}">
+                                        <td th:each="val : ${row.values()}" th:text="${val}">Val</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

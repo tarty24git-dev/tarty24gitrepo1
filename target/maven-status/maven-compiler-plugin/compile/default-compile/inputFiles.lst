@@ -1,0 +1,16 @@
+/app/src/main/java/com/cth/app/controller/AuthController.java
+/app/src/main/java/com/cth/app/service/ReportEngineService.java
+/app/src/main/java/com/cth/app/model/ReportConfig.java
+/app/src/main/java/com/cth/app/repository/UserRepository.java
+/app/src/main/java/com/cth/app/service/UserService.java
+/app/src/main/java/com/cth/app/controller/DashboardController.java
+/app/src/main/java/com/cth/app/model/User.java
+/app/src/main/java/com/cth/app/model/TableMetadata.java
+/app/src/main/java/com/cth/app/controller/DynamicExplorerController.java
+/app/src/main/java/com/cth/app/service/DatabaseExplorerService.java
+/app/src/main/java/com/cth/app/controller/UserController.java
+/app/src/main/java/com/cth/app/repository/ReportConfigRepository.java
+/app/src/main/java/com/cth/app/config/DynamicPropertiesConfig.java
+/app/src/main/java/com/cth/app/security/SecurityConfig.java
+/app/src/main/java/com/cth/app/Application.java
+/app/src/main/java/com/cth/app/service/AppConfigService.java
